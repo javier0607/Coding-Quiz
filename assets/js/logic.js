@@ -1,5 +1,5 @@
 
-var currentQuestion = 0;
+var currentQuestionIndex = 0;
 var time = questions.length * 15;
 var timer;
 
@@ -12,7 +12,7 @@ var questionChoices = document.querySelector("#choices");
 
 function startQuiz() {
     var homeScreen = document.querySelector("#start-screen");
-    startScreen.setAttribute("class", "hide");
+    homeScreen.setAttribute("class", "hide");
 
     questionsElement.removeAttribute("class");
 
@@ -21,8 +21,21 @@ function startQuiz() {
 
 function getCurrentQuestion() {
     var currentQuestion = questions[currentQuestionIndex];
-    var titleElement = document.querySelector("#question-title");
+    var titleElement = document.querySelector("#questions");
     titleElement.textContent = currentQuestion.title;
 
     questionChoices.textContent = "";
+
+    for (var i = 0; i < currentQuestion.choice.length; i++) {
+        var choiceButton = document.createElement("button");
+        choiceButton.setAttribute("class", "choice");
+        choiceButton.setAttribute("value", currentQuestion.choice[i]);
+
+        choiceButton.textContent = i + 1 + "." + currentQuestion.choice[i];
+
+        questionChoices.appendChild(choiceButton);
+    }
 }
+
+
+startButton.addEventListener("click", startQuiz);
